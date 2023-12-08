@@ -1,0 +1,28 @@
+<div class="recipe-list">
+  <div *ngFor="let recipe of recipes" class="recipe-item">
+    <div class="recipe-image">
+      <img [src]="recipe.imageUrl" alt="{{ recipe.name }}" />
+    </div>
+    <div class="recipe-info">
+      <h3>
+        <a [routerLink]="['/recipe', recipe.id]">{{ recipe.name }}</a>
+      </h3>
+      <div class="recipe-details-row">
+        <p>
+          <i class="fas fa-star"></i> 
+          Betyg: 
+          <span class="recipe-rating">{{ recipe.rating }}</span>
+        </p>
+
+        <p>{{ recipe.description }}</p>
+      </div>
+      <ng-container *ngIf="showMainIngredients[recipe.id]">
+        <h5>Huvudingredienser</h5>
+        <p [innerHTML]="recipe.mainIngredients"></p>
+      </ng-container>
+      <a href="javascript:void(0)" (click)="toggleMainIngredients(recipe.id)">
+        {{ showMainIngredients[recipe.id] ? 'Dölj huvudingredienser' : 'Huvudingredienser' }}
+      </a>
+    </div>
+  </div>
+</div>

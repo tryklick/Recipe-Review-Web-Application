@@ -1,0 +1,10 @@
+<header class="header">
+  <h1 *ngIf="currentRoute === '/'">VadagsRecept</h1>
+  <h1 *ngIf="currentRoute.startsWith('/recipe')">Introduktion</h1>
+</header>
+
+<router-outlet></router-outlet>
+
+<footer class="app-footer">
+  Skapad av Daniella Bwende
+</footer>

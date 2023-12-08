@@ -1,0 +1,85 @@
+<div class="recipe-details" *ngIf="recipe">
+  <!-- Länk tillbaka till receptlistan -->
+  <a routerLink="/">
+    <i class="fas fa-arrow-left"></i> VadagsRecept
+  </a>
+  
+  <!-- Rubrik med receptnamnet -->
+  <h2>{{ recipe.name }}</h2>
+  
+  <!-- Bild på receptet -->
+  <div class="recipe-img">
+    <img [src]="recipe.imageUrl" alt="{{ recipe.name }}" />
+  </div>
+  
+  <!-- Rad med information om betyg och tidsåtgång -->
+  <div class="info-row">
+    <div class="info">
+      <i class="fas fa-star"></i>
+      <p>Betyg: {{ recipe.rating }}</p>
+    </div>
+    
+    <div class="info">
+      <i class="fas fa-clock"></i> 
+      <p>Tidsåtgång: {{ recipe.timeSpan }}</p>
+    </div>
+  </div>
+  
+  <!-- Knappar för att växla mellan ingredienser och steg -->
+  <div class="toggle-section">
+    <button 
+      class="toggle-btn" 
+      [class.active]="showIngredients"
+      (click)="showIngredients = true"
+    >
+      <i class="fas fa-utensils"></i> Ingredienser
+    </button>
+    
+    <button 
+      class="toggle-btn" 
+      [class.active]="!showIngredients"
+      (click)="showIngredients = false"
+    >
+      <i class="fas fa-list"></i> Gör så här
+    </button>
+  </div>
+  
+  <!-- Visa ingredienser eller steg beroende på vilken knapp som är aktiv -->
+  <ng-container *ngIf="showIngredients; else showSteps">
+    <div class="ingredients">
+      <h3>Ingredienser</h3>
+      <ul>
+        <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient }}</li>
+      </ul>
+    </div>
+  </ng-container>
+  
+  <ng-template #showSteps>
+    <div class="steps">
+      <h3>Gör så här</h3>
+      <ol>
+        <li *ngFor="let step of recipe.steps">{{ step }}</li>
+      </ol>
+    </div>
+  </ng-template>
+  
+  <!-- Formulär för att skicka betyg på receptet -->
+  <div class="rating">
+    <input 
+      [(ngModel)]="inputRating" 
+      type="number" 
+      min="1" 
+      max="5" 
+      step="0.1" 
+    />
+    
+    <button 
+      class="submit-btn" 
+      [disabled]="!inputRating" 
+      (click)="submitRating()"
+    >
+      Skicka
+    </button>
+  </div>
+  
+</div>
